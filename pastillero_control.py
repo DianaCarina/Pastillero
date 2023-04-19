@@ -23,7 +23,6 @@ class Ui_MainWindow(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit):
         # En este metodo se guarda el nombre del medicamento en la base de datos
         self.NombreMedicamento = self.linEdit_Medicamento.text()
         self.aviso = query.Medicamento(self.NombreMedicamento)
-        print(self.aviso)
     
     def cerrarSesion(self):
         self.tabWidget.setCurrentIndex(0)
@@ -33,17 +32,21 @@ class Ui_MainWindow(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit):
 
     def registroPxTab(self):
         # En este metodo guardamos la info del px en la base de datos
-        self.nombrePx = self.lEdit_nombre_reg.text()
-        self.edad = self.lEdit_edad_reg
-        self.padecimiento = self.lEdit_Dx
-        self.NoSS = self.lEdit_NoSS
-        self.user = self.lEdit_User
-        self.password = self.lEdit_Password
-        self.RegistroPAciente = query.Paciente(self.nombrePx, self.edad, self.padecimiento, self.NoSS, self.user, self.password)
         self.tabWidget.setCurrentIndex(1)
     
     def regMedTab(self):
+        # Cambio a pestaña info medicameto
         self.tabWidget.setCurrentIndex(2)
+        # Captura de los datos en los line edit
+        self.nombrePx = self.lEdit_nombre_reg.text()
+        self.edad = int(self.lEdit_edad_reg.text())
+        self.padecimiento = self.lEdit_Dx.text()
+        self.NoSS = int(self.lEdit_NoSS.text())
+        self.user = self.lEdit_User.text()
+        self.password = self.lEdit_Password.text()
+        # Insertat los datos en la base de datos
+        self.RegistroPAciente = query.Paciente(self.nombrePx, self.padecimiento, self.edad, self.NoSS, self.user, self.password)
+        self.RegistroPAciente.registro()
     
     def pastilleroView(self):
         self.tabWidget.setCurrentIndex(4)
