@@ -3,7 +3,9 @@ from advertencia_id import *
 from addMe import *
 import query as query
 
-class Ui_MainWindow(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit):
+from PyQt5 import  QtWidgets
+
+class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit):
     def __init__ (self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self) 
@@ -69,13 +71,13 @@ class Ui_MainWindow(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit):
     
     def rellenarCBox(self):
         pass
-"""
+
 class Ui_Form(Ui_Form, QtWidgets.QMainWindow):
     def __init__ (self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self) 
 
-class Ui_Dialog(Ui_Dialog, QtWidgets.QDialog, QtDialog.QLineEdit):
+class AgregarMedicamento(Ui_Dialog, QtWidgets.QDialog, QtWidgets.QLineEdit):
     def __init__ (self, *args, **kwargs):
         QtWidgets.QDialog.__init__(self)
         self.setupUi(self)
@@ -89,18 +91,14 @@ class Ui_Dialog(Ui_Dialog, QtWidgets.QDialog, QtDialog.QLineEdit):
         self.id_med = self.medicamento[1:4].upper() + "1"
         self.agregar = query.Medicamento(self.id_med, self.medicamento)
         self.agregar.registroMedicamento()
-"""
 
 if __name__=="__main__":
     import sys
     app=QtWidgets.QApplication([])
-    ventana = Ui_MainWindow()
+    ventana = ProgramaPrincipal()
     ventana.show()
-
-
     advertencia = Ui_Form()
-    Dialog = QtWidgets.QDialog()
-    addMed = Ui_Dialog()
-    addMed.setupUi(Dialog)
-   # addMed.show()
+    widget = AgregarMedicamento()
+    widget.show()
+
     sys.exit(app.exec_())

@@ -1,3 +1,4 @@
+# Este programa es para testear el funcionamiento de la ventana donde se agregara el medicamento
 from addMe import Ui_Dialog
 from PyQt5 import  QtWidgets
 class dialo(Ui_Dialog, QtWidgets.QDialog, QtWidgets.QLineEdit):
