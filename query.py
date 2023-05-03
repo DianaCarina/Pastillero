@@ -13,16 +13,16 @@ class Medicamento:
                 host =  '127.0.0.1', 
                 database = 'Pastillero')
             print("Conexion exitosa con base de datos pastillero")
-        except:
-            print(f"Ha ocurrido un error {e}")
+        except Exception:
+            print(f"Ha ocurrido un error")
     
     def registroMedicamento(self):
         try:
             with self.conexion:
                 with self.conexion.cursor() as self.cursor:
-                    self.consulta = "INSERT INTO \"MEDICAMENTO\"(id_medicamento, nombre_medicamento) VALUES(%s, %s)"
+                    self.consulta = "INSERT INTO \"Medicamentos\"(id_medicamento, nombre_medicamento) VALUES(%s, %s)"
                     self.valores = self._idMedicamento, self._medicamento
-                    self.cursor.execute(self.consulta,self.values)
+                    self.cursor.execute(self.consulta,self.valores)
                     self.regafectados = self.cursor.rowcount
                     print(f"Registros afectados {self.regafectados}")        
         except:

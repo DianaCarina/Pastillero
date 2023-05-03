@@ -1,5 +1,6 @@
-from pastillero import *
+from Pastillero import *
 from advertencia_id import *
+from addMe import *
 import query as query
 
 class Ui_MainWindow(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit):
@@ -15,6 +16,7 @@ class Ui_MainWindow(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit):
         self.btn_back_inicio.clicked.connect(self.cerrarSesion)
         self.btn_add_med.clicked.connect(self.addMedicamento)
         self.btn_modificar.clicked.connect(self.modificar)
+        self.btn_record_med.clicked.connect(self.addNewMEd)
 
     def modificar(self):
         self.tabWidget.setCurrentIndex(2)
@@ -25,42 +27,78 @@ class Ui_MainWindow(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit):
         self.aviso = query.Medicamento(self.NombreMedicamento)
     
     def cerrarSesion(self):
+        # Cambio de pestaña al inico del programa
         self.tabWidget.setCurrentIndex(0)
 
     def busquedaTab(self):
+        # Cambio de pestaña para el usuario y contraseña
         self.tabWidget.setCurrentIndex(3)
 
     def registroPxTab(self):
-        # En este metodo guardamos la info del px en la base de datos
+        # Cambio a pestaña de registro PX
         self.tabWidget.setCurrentIndex(1)
     
+    def addNewMEd(self):
+        pass
+     #   Dialog.show()
+
     def regMedTab(self):
-        # Cambio a pestaña info medicameto
-        self.tabWidget.setCurrentIndex(2)
+        # En este metodo guardamos la info del px en la base de datos
         # Captura de los datos en los line edit
-        self.nombrePx = self.lEdit_nombre_reg.text()
-        self.edad = int(self.lEdit_edad_reg.text())
-        self.padecimiento = self.lEdit_Dx.text()
-        self.NoSS = int(self.lEdit_NoSS.text())
-        self.user = self.lEdit_User.text()
-        self.password = self.lEdit_Password.text()
-        # Insertat los datos en la base de datos
-        self.RegistroPAciente = query.Paciente(self.nombrePx, self.padecimiento, self.edad, self.NoSS, self.user, self.password)
-        self.RegistroPAciente.registro()
-    
+        self.lbl_corregir.setText("")
+        try:
+            self.nombrePx = self.lEdit_nombre_reg.text()
+            self.edad = int(self.lEdit_edad_reg.text())
+            self.padecimiento = self.lEdit_Dx.text()
+            self.NoSS = int(self.lEdit_NoSS.text())
+            self.user = self.lEdit_User.text()
+            self.password = self.lEdit_Password.text()
+            # Insertat los datos en la base de datos
+            self.RegistroPAciente = query.Paciente(self.nombrePx, self.padecimiento, self.edad, self.NoSS, self.user, self.password)
+            self.RegistroPAciente.registroPX()
+            # Cambio a pestaña info medicameto
+            self.tabWidget.setCurrentIndex(2)
+            self.comboBox.addItem("Buenas")
+        except(ValueError):
+            self.lbl_corregir.setText("Ingrese valores corretos")
+            print("Corrija el numero")
+                
     def pastilleroView(self):
+        # Cambio a la pestaña de visualizar los medicamentos
         self.tabWidget.setCurrentIndex(4)
     
-
+    def rellenarCBox(self):
+        pass
+"""
 class Ui_Form(Ui_Form, QtWidgets.QMainWindow):
     def __init__ (self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self) 
+
+class Ui_Dialog(Ui_Dialog, QtWidgets.QDialog, QtDialog.QLineEdit):
+    def __init__ (self, *args, **kwargs):
+        QtWidgets.QDialog.__init__(self)
+        self.setupUi(self)
+        self.btn_aggMedicament.click()
+        self.btn_aggMedicament.clicked.connect(self.addMedDB)
+        print("Si se ejecuta")
+
+    def addMedDB(self):
+        self.medicamento = self.lEdit_Medicamento.text()
+        print(self.medicamento)
+        self.id_med = self.medicamento[1:4].upper() + "1"
+        self.agregar = query.Medicamento(self.id_med, self.medicamento)
+        self.agregar.registroMedicamento()
+"""
 
 if __name__=="__main__":
     import sys
     app=QtWidgets.QApplication([])
     ventana = Ui_MainWindow()
     advertencia = Ui_Form()
+    Dialog = QtWidgets.QDialog()
+    addMed = Ui_Dialog()
+    addMed.setupUi(Dialog)
     ventana.show()
+   # addMed.show()
     sys.exit(app.exec_())
