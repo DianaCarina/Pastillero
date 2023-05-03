@@ -3,8 +3,6 @@ from advertencia_id import *
 from addMe import Ui_Dialog
 import query as query
 
-#from PyQt5 import  QtWidgets
-
 class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit):
     def __init__ (self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
