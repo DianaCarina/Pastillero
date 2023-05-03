@@ -31,7 +31,7 @@ class Ui_Dialog(object):
         self.lEdit_Medicamento.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.lEdit_Medicamento.setObjectName("lEdit_Medicamento")
         self.btn_aggMedicament = QtWidgets.QPushButton(Dialog)
-        self.btn_aggMedicament.setGeometry(QtCore.QRect(50, 90, 101, 31))
+        self.btn_aggMedicament.setGeometry(QtCore.QRect(50, 70, 101, 31))
         self.btn_aggMedicament.setObjectName("btn_aggMedicament")
         self.btn_cerrar = QtWidgets.QPushButton(Dialog)
         self.btn_cerrar.setGeometry(QtCore.QRect(230, 70, 101, 31))
@@ -43,9 +43,6 @@ class Ui_Dialog(object):
         self.lbl_medAggSucces.setFont(font)
         self.lbl_medAggSucces.setText("")
         self.lbl_medAggSucces.setObjectName("lbl_medAggSucces")
-        self.lineEdit = QtWidgets.QLineEdit(Dialog)
-        self.lineEdit.setGeometry(QtCore.QRect(90, 50, 113, 20))
-        self.lineEdit.setObjectName("lineEdit")
 
         self.retranslateUi(Dialog)
         self.btn_cerrar.clicked.connect(Dialog.close) # type: ignore

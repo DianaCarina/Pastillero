@@ -62,8 +62,8 @@ class Paciente:
                     self.regafectados = self.cursor.rowcount
                     print(f"Registros afectados {self.regafectados}")
 
-        except Exception as e:
-            print(f"Ha ocurrido un error {e}")
+        except:
+            print(f"Ha ocurrido un error")
 
         finally:
             self.cursor.close()       

@@ -39,12 +39,10 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.tabWidget.setCurrentIndex(1)
     
     def addNewMEd(self):
-        pass
-     #   Dialog.show()
+        widget.show()
 
     def regMedTab(self):
-        # En este metodo guardamos la info del px en la base de datos
-        # Captura de los datos en los line edit
+        # Captura de los datos del px de los line edit
         self.lbl_corregir.setText("")
         try:
             self.nombrePx = self.lEdit_nombre_reg.text()
@@ -81,7 +79,6 @@ class AgregarMedicamento(Ui_Dialog, QtWidgets.QDialog, QtWidgets.QLineEdit):
         self.setupUi(self)
         self.btn_aggMedicament.click()
         self.btn_aggMedicament.clicked.connect(self.addMedDB)
-        print("Si se ejecuta")
 
     def addMedDB(self):
         self.medicamento = self.lEdit_Medicamento.text()
@@ -93,10 +90,12 @@ class AgregarMedicamento(Ui_Dialog, QtWidgets.QDialog, QtWidgets.QLineEdit):
 if __name__=="__main__":
     import sys
     app=QtWidgets.QApplication([])
+    # Creamos una instancia del programa principal
     ventana = ProgramaPrincipal()
     ventana.show()
+
     advertencia = Ui_Form()
+    # Creamos una instancia para el dialogo donde se agregamos medicamentos
     widget = AgregarMedicamento()
-    widget.show()
 
     sys.exit(app.exec_())
