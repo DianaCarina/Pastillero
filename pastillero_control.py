@@ -95,10 +95,12 @@ if __name__=="__main__":
     import sys
     app=QtWidgets.QApplication([])
     ventana = Ui_MainWindow()
+    ventana.show()
+
+
     advertencia = Ui_Form()
     Dialog = QtWidgets.QDialog()
     addMed = Ui_Dialog()
     addMed.setupUi(Dialog)
-    ventana.show()
    # addMed.show()
     sys.exit(app.exec_())
