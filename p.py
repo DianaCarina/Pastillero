@@ -2,7 +2,7 @@ from addMe import Ui_Dialog
 from PyQt5 import  QtWidgets
 class dialo(Ui_Dialog, QtWidgets.QDialog, QtWidgets.QLineEdit):
     def __init__ (self, *args, **kwargs):
-        QtWidgets.QDialog.__init__(self, *args, **kwargs)
+        super().__init__()
         self.ui = Ui_Dialog()
 
         # Configuramos la interfaz gráfica
