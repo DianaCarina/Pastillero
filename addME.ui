@@ -20,7 +20,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>30</y>
+     <y>40</y>
      <width>211</width>
      <height>16</height>
     </rect>
@@ -37,9 +37,9 @@
   <widget class="QLineEdit" name="lEdit_Medicamento">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>30</y>
-     <width>141</width>
+     <x>200</x>
+     <y>40</y>
+     <width>191</width>
      <height>20</height>
     </rect>
    </property>
@@ -61,8 +61,8 @@
   <widget class="QPushButton" name="btn_aggMedicament">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>70</y>
+     <x>70</x>
+     <y>80</y>
      <width>101</width>
      <height>31</height>
     </rect>
@@ -75,7 +75,7 @@
    <property name="geometry">
     <rect>
      <x>230</x>
-     <y>70</y>
+     <y>80</y>
      <width>101</width>
      <height>31</height>
     </rect>
@@ -84,22 +84,25 @@
     <string>Cerrar</string>
    </property>
   </widget>
-  <widget class="QLabel" name="lbl_medAggSucces">
+  <widget class="QLabel" name="lbl__resultado">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>110</y>
-     <width>261</width>
-     <height>16</height>
+     <x>20</x>
+     <y>10</y>
+     <width>361</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <pointsize>11</pointsize>
+     <pointsize>9</pointsize>
     </font>
    </property>
    <property name="text">
-    <string/>
+    <string> </string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

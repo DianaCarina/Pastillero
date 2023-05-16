@@ -1,4 +1,4 @@
-from Pastillero import *
+from pastillero import *
 from advertencia_id import *
 from addMe import Ui_Dialog
 import query as query
@@ -22,10 +22,11 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.tabWidget.setCurrentIndex(2)
 
     def addMedicamento(self):
-        # En este metodo se guarda el nombre del medicamento en la base de datos
-        self.NombreMedicamento = self.linEdit_Medicamento.text()
-        self.aviso = query.Medicamento(self.NombreMedicamento)
-    
+        # Aqui se seleccionas los medicamentos del combobox y los guarda en la base de datos de los medicamentos que toma el paciente
+        self.NombreMedicamento = self.comboBox.currentText()
+        print(self.NombreMedicamento)
+        self.rellenarCBox()
+
     def cerrarSesion(self):
         # Cambio de pestaña al inico del programa
         self.tabWidget.setCurrentIndex(0)
@@ -39,7 +40,9 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.tabWidget.setCurrentIndex(1)
     
     def addNewMEd(self):
-        widget.show()
+        # Cuando se quiere agregar un medicamento que no esta en la lisa
+        # se abre una nueva pestaña para agregarlo
+        nuevoMeciamentoWidget.show()
 
     def regMedTab(self):
         # Captura de los datos del px de los line edit
@@ -56,7 +59,7 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
             self.RegistroPAciente.registroPX()
             # Cambio a pestaña info medicameto
             self.tabWidget.setCurrentIndex(2)
-            self.comboBox.addItem("Buenas")
+            # Rellenar la combobox con los medicamentos existentes en la BD
         except(ValueError):
             self.lbl_corregir.setText("Ingrese valores corretos")
             print("Corrija el numero")
@@ -66,7 +69,10 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.tabWidget.setCurrentIndex(4)
     
     def rellenarCBox(self):
-        pass
+        self.rellenar = query.Medicamento(5, "medicamento")
+        self.records = self.rellenar.medQuery()
+        for registro in self.records:
+            self.comboBox.addItem(registro[1])
 
 class Ui_Form(Ui_Form, QtWidgets.QMainWindow):
     def __init__ (self, *args, **kwargs):
@@ -74,18 +80,19 @@ class Ui_Form(Ui_Form, QtWidgets.QMainWindow):
         self.setupUi(self) 
 
 class AgregarMedicamento(Ui_Dialog, QtWidgets.QDialog, QtWidgets.QLineEdit):
-    def __init__ (self, *args, **kwargs):
+    def __init__(self, ProgramaPrincipal, *args, **kwargs):
         QtWidgets.QDialog.__init__(self)
         self.setupUi(self)
-        self.btn_aggMedicament.click()
         self.btn_aggMedicament.clicked.connect(self.addMedDB)
+        self.principal = ProgramaPrincipal
 
     def addMedDB(self):
+        # Aqui se guarda el nuevo medicamento a la base de datos desde el Qdialog
         self.medicamento = self.lEdit_Medicamento.text()
-        print(self.medicamento)
         self.id_med = self.medicamento[1:4].upper() + "1"
         self.agregar = query.Medicamento(self.id_med, self.medicamento)
-        self.agregar.registroMedicamento()
+        self.lbl__resultado.setText(self.agregar.registroMedicamento())
+        self.principal.rellenarCBox()
 
 if __name__=="__main__":
     import sys
@@ -96,6 +103,6 @@ if __name__=="__main__":
 
     advertencia = Ui_Form()
     # Creamos una instancia para el dialogo donde se agregamos medicamentos
-    widget = AgregarMedicamento()
+    nuevoMeciamentoWidget = AgregarMedicamento()
 
     sys.exit(app.exec_())
