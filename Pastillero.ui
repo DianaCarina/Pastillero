@@ -485,8 +485,8 @@
      <widget class="QPushButton" name="btn_add_med">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>200</y>
+        <x>160</x>
+        <y>150</y>
         <width>191</width>
         <height>41</height>
        </rect>
@@ -500,14 +500,14 @@
        <string notr="true">background-color: rgb(208, 208, 208);</string>
       </property>
       <property name="text">
-       <string>Agregar</string>
+       <string>Agregar medicamento</string>
       </property>
      </widget>
      <widget class="QPushButton" name="btn_end_med">
       <property name="geometry">
        <rect>
-        <x>260</x>
-        <y>200</y>
+        <x>170</x>
+        <y>320</y>
         <width>191</width>
         <height>41</height>
        </rect>
@@ -540,9 +540,9 @@
      <widget class="QPushButton" name="btn_record_med">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>300</y>
-        <width>261</width>
+        <x>260</x>
+        <y>260</y>
+        <width>191</width>
         <height>41</height>
        </rect>
       </property>
@@ -555,16 +555,16 @@
        <string notr="true">background-color: rgb(208, 208, 208);</string>
       </property>
       <property name="text">
-       <string>Registrar medicamento</string>
+       <string>Registrar nuevo medicamento</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_9">
       <property name="geometry">
        <rect>
-        <x>30</x>
-        <y>270</y>
-        <width>431</width>
-        <height>16</height>
+        <x>20</x>
+        <y>210</y>
+        <width>441</width>
+        <height>31</height>
        </rect>
       </property>
       <property name="font">
@@ -575,8 +575,38 @@
       <property name="whatsThis">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;kl&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
       <property name="text">
-       <string>Si su medicamento no aparece en la lista, porfavor registre el medicamento</string>
+       <string>Si su medicamento no aparece en la lista, porfavor registre el medicamento y actualice la lista</string>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="btn_updateBox">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>260</y>
+        <width>191</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(208, 208, 208);</string>
+      </property>
+      <property name="text">
+       <string>Actualizar lista</string>
       </property>
      </widget>
     </widget>

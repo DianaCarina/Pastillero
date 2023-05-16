@@ -7,7 +7,9 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
     def __init__ (self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self) 
+        # Iniciar el programa en la primera pestaña
         self.tabWidget.setCurrentIndex(0)
+        # Eventos con sus slots 
         self.btn_busqueda.clicked.connect(self.busquedaTab)
         self.btn_registrarce.clicked.connect(self.registroPxTab)
         self.btn_registrar_px.clicked.connect(self.regMedTab)
@@ -17,15 +19,16 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.btn_add_med.clicked.connect(self.addMedicamento)
         self.btn_modificar.clicked.connect(self.modificar)
         self.btn_record_med.clicked.connect(self.addNewMEd)
-
+        self.btn_updateBox.clicked.connect(self.rellenarCBox)
+    
     def modificar(self):
         self.tabWidget.setCurrentIndex(2)
 
     def addMedicamento(self):
-        # Aqui se seleccionas los medicamentos del combobox y los guarda en la base de datos de los medicamentos que toma el paciente
+        # Aqui se seleccionas los medicamentos del combobox y 
+        # los guarda en la base de datos de los medicamentos que toma el paciente
         self.NombreMedicamento = self.comboBox.currentText()
         print(self.NombreMedicamento)
-        self.rellenarCBox()
 
     def cerrarSesion(self):
         # Cambio de pestaña al inico del programa
@@ -60,6 +63,7 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
             # Cambio a pestaña info medicameto
             self.tabWidget.setCurrentIndex(2)
             # Rellenar la combobox con los medicamentos existentes en la BD
+            self.rellenarCBox()
         except(ValueError):
             self.lbl_corregir.setText("Ingrese valores corretos")
             print("Corrija el numero")
@@ -72,6 +76,11 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.rellenar = query.Medicamento(5, "medicamento")
         self.records = self.rellenar.medQuery()
         for registro in self.records:
+            try:
+                self.comboBox.findText(registro[1])
+                print("Twice")
+            except:
+                pass
             self.comboBox.addItem(registro[1])
 
 class Ui_Form(Ui_Form, QtWidgets.QMainWindow):
@@ -80,11 +89,10 @@ class Ui_Form(Ui_Form, QtWidgets.QMainWindow):
         self.setupUi(self) 
 
 class AgregarMedicamento(Ui_Dialog, QtWidgets.QDialog, QtWidgets.QLineEdit):
-    def __init__(self, ProgramaPrincipal, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         QtWidgets.QDialog.__init__(self)
         self.setupUi(self)
         self.btn_aggMedicament.clicked.connect(self.addMedDB)
-        self.principal = ProgramaPrincipal
 
     def addMedDB(self):
         # Aqui se guarda el nuevo medicamento a la base de datos desde el Qdialog
@@ -92,7 +100,6 @@ class AgregarMedicamento(Ui_Dialog, QtWidgets.QDialog, QtWidgets.QLineEdit):
         self.id_med = self.medicamento[1:4].upper() + "1"
         self.agregar = query.Medicamento(self.id_med, self.medicamento)
         self.lbl__resultado.setText(self.agregar.registroMedicamento())
-        self.principal.rellenarCBox()
 
 if __name__=="__main__":
     import sys
