@@ -57,9 +57,9 @@
      <string notr="true">background-color: rgb(227, 227, 227);</string>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>1</number>
     </property>
-    <widget class="QWidget" name="tab">
+    <widget class="QWidget" name="tab_inicio">
      <attribute name="title">
       <string>Inicio</string>
      </attribute>
@@ -159,7 +159,7 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_2">
+    <widget class="QWidget" name="tab_registro_px">
      <attribute name="title">
       <string>Registrarce</string>
      </attribute>
@@ -168,7 +168,7 @@
        <rect>
         <x>90</x>
         <y>0</y>
-        <width>281</width>
+        <width>303</width>
         <height>71</height>
        </rect>
       </property>
@@ -194,7 +194,7 @@
           </font>
          </property>
          <property name="text">
-          <string>Registro</string>
+          <string>Registro datos del Paciente</string>
          </property>
         </widget>
        </item>
@@ -340,7 +340,7 @@
      <widget class="QPushButton" name="btn_registrar_px">
       <property name="geometry">
        <rect>
-        <x>150</x>
+        <x>280</x>
         <y>340</y>
         <width>191</width>
         <height>41</height>
@@ -348,7 +348,7 @@
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>11</pointsize>
        </font>
       </property>
       <property name="styleSheet">
@@ -441,8 +441,29 @@
        <string/>
       </property>
      </widget>
+     <widget class="QPushButton" name="btn_regresar_main">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>340</y>
+        <width>191</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(208, 208, 208);</string>
+      </property>
+      <property name="text">
+       <string>Regresar a menu principal</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QWidget" name="tab_4">
+    <widget class="QWidget" name="tab_registro_medicamento">
      <attribute name="title">
       <string>Registro de medicamentos</string>
      </attribute>
@@ -610,29 +631,29 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_3">
+    <widget class="QWidget" name="tab_inicioSesion">
      <attribute name="title">
       <string>Inicio Sesion</string>
      </attribute>
      <widget class="QPushButton" name="btn_pxView">
       <property name="geometry">
        <rect>
-        <x>150</x>
-        <y>250</y>
+        <x>270</x>
+        <y>220</y>
         <width>191</width>
         <height>41</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <pointsize>12</pointsize>
+        <pointsize>11</pointsize>
        </font>
       </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(208, 208, 208);</string>
       </property>
       <property name="text">
-       <string>Buscar</string>
+       <string>Iniciar sesion</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="lbl_nombre_ingresar">
@@ -715,8 +736,29 @@
        <string>Ingrese los datos</string>
       </property>
      </widget>
+     <widget class="QPushButton" name="btn_regresar_2">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>220</y>
+        <width>191</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(208, 208, 208);</string>
+      </property>
+      <property name="text">
+       <string>Regresar a menu principal</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QWidget" name="tab_5">
+    <widget class="QWidget" name="tab_tabla_px">
      <attribute name="title">
       <string>Pacientes</string>
      </attribute>

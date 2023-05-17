@@ -9,38 +9,55 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.setupUi(self) 
         # Iniciar el programa en la primera pestaña
         self.tabWidget.setCurrentIndex(0)
+        self.tab_inicio.setEnabled(True)
+        self.tab_inicioSesion.setEnabled(False)
+        self.tab_registro_medicamento.setEnabled(False)
+        self.tab_registro_px.setEnabled(False)
+        self.tab_tabla_px.setEnabled(False)
         # Eventos con sus slots 
         self.btn_busqueda.clicked.connect(self.busquedaTab)
         self.btn_registrarce.clicked.connect(self.registroPxTab)
         self.btn_registrar_px.clicked.connect(self.regMedTab)
         self.btn_end_med.clicked.connect(self.busquedaTab)
         self.btn_pxView.clicked.connect(self.pastilleroView)
-        self.btn_back_inicio.clicked.connect(self.cerrarSesion)
+        self.btn_back_inicio.clicked.connect(self.regresarMenuPrincipal)
         self.btn_add_med.clicked.connect(self.addMedicamento)
         self.btn_modificar.clicked.connect(self.modificar)
         self.btn_record_med.clicked.connect(self.addNewMEd)
         self.btn_updateBox.clicked.connect(self.rellenarCBox)
-    
-    def modificar(self):
-        self.tabWidget.setCurrentIndex(2)
-
-    def addMedicamento(self):
-        # Aqui se seleccionas los medicamentos del combobox y 
-        # los guarda en la base de datos de los medicamentos que toma el paciente
-        self.NombreMedicamento = self.comboBox.currentText()
-        print(self.NombreMedicamento)
-
-    def cerrarSesion(self):
-        # Cambio de pestaña al inico del programa
-        self.tabWidget.setCurrentIndex(0)
-
-    def busquedaTab(self):
-        # Cambio de pestaña para el usuario y contraseña
-        self.tabWidget.setCurrentIndex(3)
+        self.btn_regresar_main.clicked.connect(self.regresarMenuPrincipal)
+        self.btn_regresar_2.clicked.connect(self.regresarMenuPrincipal)
 
     def registroPxTab(self):
         # Cambio a pestaña de registro PX
         self.tabWidget.setCurrentIndex(1)
+        self.tab_registro_px.setEnabled(True)
+        self.tab_inicio.setEnabled(False)
+        self.tab_tabla_px.setEnabled(False)
+    
+    def regresarMenuPrincipal(self):
+        self.tabWidget.setCurrentIndex(0)
+        self.tab_inicio.setEnabled(True)
+        self.tab_registro_px.setEnabled(False)
+        self.tab_inicioSesion.setEnabled(False)
+        self.tab_tabla_px.setEnabled(False)
+
+    def addMedicamento(self):
+        # Aqui se seleccionas los medicamentos del combobox y 
+        # los guarda en la base de datos de los medicamentos que toma el paciente
+        self.tab_registro_medicamento.setEnabled(True)
+        self.NombreMedicamento = self.comboBox.currentText()
+        print(self.NombreMedicamento)
+
+    def modificar(self):
+        self.tabWidget.setCurrentIndex(2)
+
+    def busquedaTab(self):
+        # Cambio de pestaña para el usuario y contraseña
+        self.tabWidget.setCurrentIndex(3)
+        self.tab_inicioSesion.setEnabled(True)
+        self.tab_inicio.setEnabled(False)
+
     
     def addNewMEd(self):
         # Cuando se quiere agregar un medicamento que no esta en la lisa
@@ -49,39 +66,53 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
 
     def regMedTab(self):
         # Captura de los datos del px de los line edit
-        self.lbl_corregir.setText("")
+        self.edad = 0
+        self.NoSS = 0
         try:
-            self.nombrePx = self.lEdit_nombre_reg.text()
             self.edad = int(self.lEdit_edad_reg.text())
-            self.padecimiento = self.lEdit_Dx.text()
             self.NoSS = int(self.lEdit_NoSS.text())
-            self.user = self.lEdit_User.text()
-            self.password = self.lEdit_Password.text()
+        except:
+            self.lbl_corregir.setText("La edad y el No. Seguro social deben ser con numero")
+        
+        self.nombrePx = self.lEdit_nombre_reg.text()
+        self.padecimiento = self.lEdit_Dx.text()
+        self.user = self.lEdit_User.text()
+        self.password = self.lEdit_Password.text()
+
+        try:
             # Insertat los datos en la base de datos
-            self.RegistroPAciente = query.Paciente(self.nombrePx, self.padecimiento, self.edad, self.NoSS, self.user, self.password)
-            self.RegistroPAciente.registroPX()
+            self.RegistroPaciente = query.Paciente(self.nombrePx, self.padecimiento, self.edad, self.NoSS, self.user, self.password)
+            self.RegistroPaciente.registroPX()
             # Cambio a pestaña info medicameto
             self.tabWidget.setCurrentIndex(2)
-            # Rellenar la combobox con los medicamentos existentes en la BD
-            self.rellenarCBox()
+            self.tab_registro_medicamento.setEnabled(True)
+            self.tab_registro_px.setEnabled(False)
+            # Limpiar lineedit
         except(ValueError):
             self.lbl_corregir.setText("Ingrese valores corretos")
-            print("Corrija el numero")
+
+        finally:
+            # Rellenar la combobox con los medicamentos existentes en la BD
+            self.rellenarCBox()
                 
     def pastilleroView(self):
         # Cambio a la pestaña de visualizar los medicamentos
         self.tabWidget.setCurrentIndex(4)
+        self.tab_tabla_px.setEnabled(True)
+        self.tab_inicioSesion.setEnabled(False)
     
     def rellenarCBox(self):
         self.rellenar = query.Medicamento(5, "medicamento")
         self.records = self.rellenar.medQuery()
+        # Por cada registro rellenamos la combobox
         for registro in self.records:
-            try:
-                self.comboBox.findText(registro[1])
-                print("Twice")
-            except:
-                pass
-            self.comboBox.addItem(registro[1])
+            self.busqueda = self.comboBox.findText(registro[1])
+            # Nos aseguramos que no exista el medicamento ya registrado en la combobox
+            if self.busqueda == -1:
+                self.comboBox.addItem(registro[1])
+            # Si ya existe dejamos pasar
+            else:
+                print(self.busqueda)
 
 class Ui_Form(Ui_Form, QtWidgets.QMainWindow):
     def __init__ (self, *args, **kwargs):
