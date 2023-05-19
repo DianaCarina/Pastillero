@@ -41,13 +41,14 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.lbl_corregir.setText("")
 
     def registroPxTab(self):
-        # Cambio a pestaña de registro PX
+    # Cambio a pestaña de registro PX
         self.tabWidget.setCurrentIndex(1)
         self.tab_registro_px.setEnabled(True)
         self.tab_inicio.setEnabled(False)
         self.tab_tabla_px.setEnabled(False)
     
     def regresarMenuPrincipal(self):
+    # Se regresa a la pestaña principal
         self.tabWidget.setCurrentIndex(0)
         self.tab_inicio.setEnabled(True)
         self.tab_registro_px.setEnabled(False)
@@ -55,8 +56,8 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.tab_tabla_px.setEnabled(False)
 
     def addMedicamento(self):
-        # Aqui se seleccionas los medicamentos del combobox y 
-        # los guarda en la base de datos de los medicamentos que toma el paciente
+    # Aqui se seleccionas los medicamentos del combobox y 
+    # los guarda en la base de datos de los medicamentos que toma el paciente
         if len(self.lista_medicamentos) < 5:
             self.NombreMedicamento = self.comboBox.currentText()
             self.queryMed = query.Medicamento(self.NombreMedicamento)
@@ -68,21 +69,27 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
             self.label_9.setText(f"Medicamentos seleccionados: {str(len(self.lista_medicamentos))} \n Ya no es posible agregar mas medicamentos")
 
     def modificar(self):
+    # Aqui se modificaran los componentes de la tabla
         self.tabWidget.setCurrentIndex(2)
 
     def busquedaTab(self):
-        # Cambio de pestaña para el usuario y contraseña
+    # Cambio de pestaña para el usuario y contraseña
         self.tabWidget.setCurrentIndex(3)
         self.tab_inicioSesion.setEnabled(True)
         self.tab_inicio.setEnabled(False)
+        
+    def TablaTab(self):
+        self.tabWidget.setCurrentIndex(4)
+        self.tab_tabla_px.setEnabled(True)
+        self.tab_inicioSesion.setEnabled(False)
+        self.tab_registro_medicamento.setEnabled(False)
 
     def addNewMEd(self):
-        # Cuando se quiere agregar un medicamento que no esta en la lisa
-        # se abre una nueva pestaña para agregarlo
+    # Se abre una nueva pestaña para agregar un medicamento que no esta en la BD
         nuevoMeciamentoWidget.show()
 
     def regMedTab(self):
-        # Captura de los datos del px de los line edit
+    # Captura de los datos del px de los line edit
         line_edits = [self.lEdit_nombre_reg, self.lEdit_Dx, self.lEdit_User, self.lEdit_Password, self.lEdit_edad_reg, self.lEdit_NoSS]
         if all(line_edit.text() for line_edit in line_edits):
             self.nombrePx = self.lEdit_nombre_reg.text()
@@ -112,14 +119,7 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
             self.lbl_corregir.setText("*Agregar correctamente los campos*")
                 
     def pastilleroView(self):
-        # Cambio a la pestaña de visualizar los medicamentos
-        self.tabWidget.setCurrentIndex(4)
-        self.tab_tabla_px.setEnabled(True)
-        self.tab_inicioSesion.setEnabled(False)
-        self.tab_registro_medicamento.setEnabled(False)
-
-        self.id2 = self.busqueda_id_usuario()
-
+    # Funcion para agregar el TRATAMIENTO
         # Si se seleccionaron menos de 5 medicamentos, se rellenan los espacios
         self.faltantes = 5 - len(self.lista_medicamentos) # verificar cuantos elementos tiene la lista
         if self.faltantes > 0:
@@ -127,9 +127,14 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
                 self.lista_medicamentos.append("1")
         print(self.lista_medicamentos)
 
+        # Se busca el id del usuario 
+        self.id2 = self.busqueda_id_usuario()
+        
         # Insertar los medicmamentos en la tabla tratamiento
         self.queryTratamiento = query.Tratamiento(self.lista_medicamentos, self.id2)
         self.queryTratamiento.insertTrat()
+        # Cambio pestañas
+        self.TablaTab()
 
     def busqueda_id_usuario(self):
     # Busqueda del id del paciente
@@ -139,6 +144,7 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         return self.queryID_PX
 
     def rellenarCBox(self):
+    # Funcion para agregar medicamentos a la combobox
         self.rellenar = query.Medicamento(5, "medicamento")
         self.records = self.rellenar.medQuery()
         # Por cada registro rellenamos la combobox
