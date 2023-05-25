@@ -64,7 +64,7 @@ class Medicamento(CONEXION):
 
 # Clase para registrar al paciente
 class Paciente(CONEXION):
-    def __init__(self, nombre = "val1", enfermedad = "val2", edad = "val3", NoSS = "val4", User = "val5", password = "val6"):
+    def __init__(self, nombre = "val1", enfermedad = "val2", edad = "val3", NoSS = "val4", User = "val5", password = "val6", id = 1):
         super().__init__()
         self._nombre = nombre
         self._enfermedad = enfermedad
@@ -72,6 +72,7 @@ class Paciente(CONEXION):
         self._SeguroSocial = NoSS
         self._usuario = User
         self._password = password
+        self._id = id
         
     def registroPX(self):
         try:
@@ -99,16 +100,30 @@ class Paciente(CONEXION):
             print("Ha ocurrido un error en la consulta del Id del paciente")       
         finally:
             self.cursor.close()   
+    
+    
+    def consultaIdPX2(self):
+        try:
+            with self.conexion:
+                with self.conexion.cursor() as self.cursor:
+                    self.consulta = f'SELECT * FROM public.\"DATOS_PX\" WHERE \"ID_PX\" = \'{self._id}\''
+                    self.cursor.execute(self.consulta)
+                    self.registros  = self.cursor.fetchone()
+                    return self.registros 
+        except:
+            print("Ha ocurrido un error en la consulta del Id del paciente")       
+        finally:
+            self.cursor.close() 
 
 class Tratamiento(CONEXION):
-    def __init__(self, nombre_medicamento, id_usuario):
+    def __init__(self, nombre_medicamento = "NONE", id_usuario = "BUENAS"):
         super().__init__()
         self._nombre_medicamento = tuple(nombre_medicamento)
         self._numMedicamento = len(nombre_medicamento)
-        self._id_usuario = id_usuario
-    
+        self._id_usuario = id_usuario    
         self.values = (self._id_usuario,) + self._nombre_medicamento
-        print(self.values)
+        # print("valores a insertar: ",self.values)
+
     def insertTrat(self):
         try:
             with self.conexion:
@@ -119,6 +134,40 @@ class Tratamiento(CONEXION):
                     print(f'Registros afectados {self.registros_afectados}')
         except:
             print("Fallo en la insersion de datos del tratamiento")
+        finally:
+            self.cursor.close()   
+
+    def consultaTratamiento(self):
+        try:
+            with self.conexion:
+                with self.conexion.cursor() as self.cursor:
+                    self.consulta = f'''
+                        SELECT
+                            m1.nombre_medicamento AS medicamento1,
+                            m2.nombre_medicamento AS medicamento2,
+                            m3.nombre_medicamento AS medicamento3,
+                            m4.nombre_medicamento AS medicamento4,
+                            m5.nombre_medicamento AS medicamento5
+                        FROM
+                            "TRATAMIENTO" tr
+                            JOIN "Medicamentos" m1 ON tr."ID_MED_1" = m1.id_medicamento
+                            JOIN "Medicamentos" m2 ON tr."ID_MED_2" = m2.id_medicamento
+                            JOIN "Medicamentos" m3 ON tr."ID_MED_3" = m3.id_medicamento
+                            JOIN "Medicamentos" m4 ON tr."ID_MED_4" = m4.id_medicamento
+                            JOIN "Medicamentos" m5 ON tr."ID_MED_5" = m5.id_medicamento
+                        WHERE
+                            tr."ID_PACIENTE" = {self._id_usuario}
+                    '''
+
+                    self.cursor.execute(self.consulta)
+                    self.registros  = self.cursor.fetchone()
+                    return self.registros 
+        except:
+            print("Ha ocurrido un error en la consulta del TRATAMIENTO del paciente")       
+        finally:
+            self.cursor.close()   
+
+
 if __name__ == "__main__":
     a = Paciente('Diana', 'Ninguna', 23, 555, 'ponce', 'carinita')
     a.registroPX()

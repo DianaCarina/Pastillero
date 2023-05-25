@@ -3,7 +3,7 @@ from advertencia_id import *
 from addMe import Ui_Dialog
 import query as query
 
-class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit):
+class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit, QtWidgets.QTableWidgetItem):
     def __init__ (self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self) 
@@ -41,7 +41,7 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.lbl_corregir.setText("")
 
     def registroPxTab(self):
-    # Cambio a pestaña de registro PX
+    # Cambio a pestaña de registro de datos del PX
         self.tabWidget.setCurrentIndex(1)
         self.tab_registro_px.setEnabled(True)
         self.tab_inicio.setEnabled(False)
@@ -63,7 +63,6 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
             self.queryMed = query.Medicamento(self.NombreMedicamento)
             self.IDMed = self.queryMed.medQuery2()
             self.lista_medicamentos.append(self.IDMed)
-            print(self.lista_medicamentos)
             self.label_9.setText(f"Medicamentos seleccionados: {str(len(self.lista_medicamentos))}")
         else:
             self.label_9.setText(f"Medicamentos seleccionados: {str(len(self.lista_medicamentos))} \n Ya no es posible agregar mas medicamentos")
@@ -78,11 +77,25 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.tab_inicioSesion.setEnabled(True)
         self.tab_inicio.setEnabled(False)
         
-    def TablaTab(self):
+    def TablaTab(self, parametro1):
+    # Cambio a la Tabla para ver los medicamentos registrados
         self.tabWidget.setCurrentIndex(4)
         self.tab_tabla_px.setEnabled(True)
         self.tab_inicioSesion.setEnabled(False)
         self.tab_registro_medicamento.setEnabled(False)
+        self.tratamiento_ = query.Tratamiento(id_usuario=46)
+        self.tratamiento1 = self.tratamiento_.consultaTratamiento()
+        print("tratamiento: ", self.tratamiento1)
+        self.consulta_datos_px = query.Paciente(id=46)
+        self.datosPX = self.consulta_datos_px.consultaIdPX2()
+        print("datos del paciente: ", self.datosPX)
+        self.lbl_nombre.setText(self.datosPX[1])
+        self.lbl_edad.setText(str(self.datosPX[3]))
+        self.lbl_Dx.setText(self.datosPX[2])
+        self.lbl_NoSocial.setText(str(self.datosPX[4]))
+        self.nombre_item = QTableWidgetItem(self.tratamiento1[0])
+        self.tabla_medicamentos.setItem(1, 1, self.nombre_item)
+
 
     def addNewMEd(self):
     # Se abre una nueva pestaña para agregar un medicamento que no esta en la BD
@@ -125,7 +138,7 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         if self.faltantes > 0:
             for n in range(5-self.faltantes, 5): # verificar de que indice empezar
                 self.lista_medicamentos.append("1")
-        print(self.lista_medicamentos)
+        # print("Lista de medicamentos", self.lista_medicamentos)
 
         # Se busca el id del usuario 
         self.id2 = self.busqueda_id_usuario()
@@ -134,7 +147,7 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.queryTratamiento = query.Tratamiento(self.lista_medicamentos, self.id2)
         self.queryTratamiento.insertTrat()
         # Cambio pestañas
-        self.TablaTab()
+        self.TablaTab(self.id2)
 
     def busqueda_id_usuario(self):
     # Busqueda del id del paciente
