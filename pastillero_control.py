@@ -3,6 +3,7 @@ from advertencia_id import *
 from addMe import Ui_Dialog
 import query as query
 
+
 class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit, QtWidgets.QTableWidgetItem):
     def __init__ (self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
@@ -12,14 +13,14 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.tab_inicio.setEnabled(True)
       #  self.tab_inicioSesion.setEnabled(False)
       #  self.tab_registro_medicamento.setEnabled(False)
-      #  self.tab_registro_px.setEnabled(False)
-      #  self.tab_tabla_px.setEnabled(False)
+        self.tab_registro_px.setEnabled(False)
+        self.tab_tabla_px.setEnabled(False)
         # Eventos con sus slots 
         self.btn_busqueda.clicked.connect(self.busquedaTab)
         self.btn_registrarce.clicked.connect(self.registroPxTab)
         self.btn_registrar_px.clicked.connect(self.regMedTab)
         self.btn_end_med.clicked.connect(self.pastilleroView)
-        self.btn_pxView.clicked.connect(self.pastilleroView)
+        self.btn_pxView.clicked.connect(self.inicioSesion)
         self.btn_back_inicio.clicked.connect(self.regresarMenuPrincipal)
         self.btn_add_med.clicked.connect(self.addMedicamento)
         self.btn_modificar.clicked.connect(self.modificar)
@@ -34,9 +35,20 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.lEdit_edad_reg.textChanged.connect(self.limpiaLineEdit)
         self.lEdit_NoSS.textChanged.connect(self.limpiaLineEdit)
         self.rellenarCBox()
-        self.user = "juancho"
         self.lista_medicamentos = []
 
+    def inicioSesion(self):
+        self.nombre_usuario = self.nombre_ingresar.text()
+        self.contra_user = self.lbl_password.text()
+        self.consulta_inicio = query.Paciente(User = self.nombre_usuario, password=self.contra_user)
+        self.verificacion = self.consulta_inicio.consultaInicioSesion()
+        print(self.verificacion)
+        if self.verificacion is None:
+            self.lbl_n_user.setText("Usuario o contraseña no validos")
+        else:
+            self.lbl_n_user.clear()
+            self.TablaTab(self.verificacion[0])
+        
     def limpiaLineEdit(self):
         self.lbl_corregir.setText("")
 
@@ -58,18 +70,27 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
     def addMedicamento(self):
     # Aqui se seleccionas los medicamentos del combobox y 
     # los guarda en la base de datos de los medicamentos que toma el paciente
-        if len(self.lista_medicamentos) < 5:
+        self.len_med = len(self.lista_medicamentos)
+        if self.len_med < 5:
             self.NombreMedicamento = self.comboBox.currentText()
             self.queryMed = query.Medicamento(self.NombreMedicamento)
             self.IDMed = self.queryMed.medQuery2()
-            self.lista_medicamentos.append(self.IDMed)
-            self.label_9.setText(f"Medicamentos seleccionados: {str(len(self.lista_medicamentos))}")
+            if self.lista_medicamentos.count(self.IDMed) > 0:
+                self.label_9.setText(f"Medicamentos seleccionados: {str(len(self.lista_medicamentos))}\nNo se puede agregar un medicamento dos veces")
+            else:
+                self.lista_medicamentos.append(self.IDMed)
+                print(self.lista_medicamentos)
+                self.label_9.setText(f"Medicamentos seleccionados: {str(len(self.lista_medicamentos))}")
         else:
-            self.label_9.setText(f"Medicamentos seleccionados: {str(len(self.lista_medicamentos))} \n Ya no es posible agregar mas medicamentos")
+            self.label_9.setText(f"Medicamentos seleccionados: {str(len(self.lista_medicamentos))} \nYa no es posible agregar mas medicamentos")
+
 
     def modificar(self):
     # Aqui se modificaran los componentes de la tabla
         self.tabWidget.setCurrentIndex(2)
+        self.label_2.setText("Modificar datos del paciente")
+        self.queryDatos = query.Paciente(self.lbl_NoSocial.text())
+        self.data_px = self.queryDatos.consultaIdPX2()
 
     def busquedaTab(self):
     # Cambio de pestaña para el usuario y contraseña
@@ -83,18 +104,24 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.tab_tabla_px.setEnabled(True)
         self.tab_inicioSesion.setEnabled(False)
         self.tab_registro_medicamento.setEnabled(False)
-        self.tratamiento_ = query.Tratamiento(id_usuario=46)
+        self.nombre_ingresar.clear()
+        self.lbl_password.clear()
+
+        self.tratamiento_ = query.Tratamiento(id_usuario=parametro1)
         self.tratamiento1 = self.tratamiento_.consultaTratamiento()
         print("tratamiento: ", self.tratamiento1)
-        self.consulta_datos_px = query.Paciente(id=46)
+
+        self.consulta_datos_px = query.Paciente(id=parametro1)
         self.datosPX = self.consulta_datos_px.consultaIdPX2()
         print("datos del paciente: ", self.datosPX)
-        self.lbl_nombre.setText(self.datosPX[1])
-        self.lbl_edad.setText(str(self.datosPX[3]))
-        self.lbl_Dx.setText(self.datosPX[2])
+
+        self.lbl_nombre.setText("Nombre: " +self.datosPX[1])
+        self.lbl_edad.setText("Edad: " + str(self.datosPX[3]) + " años")
+        self.lbl_Dx.setText("Padecimento: " + self.datosPX[2])
         self.lbl_NoSocial.setText(str(self.datosPX[4]))
-        self.nombre_item = QTableWidgetItem(self.tratamiento1[0])
-        self.tabla_medicamentos.setItem(1, 1, self.nombre_item)
+        for i in range(5):
+            self.nombre_item = QtWidgets.QTableWidgetItem(self.tratamiento1[i])
+            self.tabla_medicamentos.setItem(0, i, self.nombre_item)
 
 
     def addNewMEd(self):

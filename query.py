@@ -115,6 +115,19 @@ class Paciente(CONEXION):
         finally:
             self.cursor.close() 
 
+    def consultaInicioSesion(self):
+        try:
+            with self.conexion:
+                with self.conexion.cursor() as self.cursor:
+                    self.consulta = f'SELECT * FROM public.\"DATOS_PX\" WHERE \"Usuario\" = \'{self._usuario}\' AND \"Contra\" = \'{self._password}\''
+                    self.cursor.execute(self.consulta)
+                    self.registros  = self.cursor.fetchone()
+                    return self.registros 
+        except:
+            print("Ha ocurrido un error en la consulta del Id del paciente")       
+        finally:
+            self.cursor.close()
+
 class Tratamiento(CONEXION):
     def __init__(self, nombre_medicamento = "NONE", id_usuario = "BUENAS"):
         super().__init__()
@@ -150,11 +163,11 @@ class Tratamiento(CONEXION):
                             m5.nombre_medicamento AS medicamento5
                         FROM
                             "TRATAMIENTO" tr
-                            JOIN "Medicamentos" m1 ON tr."ID_MED_1" = m1.id_medicamento
-                            JOIN "Medicamentos" m2 ON tr."ID_MED_2" = m2.id_medicamento
-                            JOIN "Medicamentos" m3 ON tr."ID_MED_3" = m3.id_medicamento
-                            JOIN "Medicamentos" m4 ON tr."ID_MED_4" = m4.id_medicamento
-                            JOIN "Medicamentos" m5 ON tr."ID_MED_5" = m5.id_medicamento
+                            LEFT JOIN "Medicamentos" m1 ON tr."ID_MED_1" = m1.id_medicamento
+                            LEFT JOIN "Medicamentos" m2 ON tr."ID_MED_2" = m2.id_medicamento
+                            LEFT JOIN "Medicamentos" m3 ON tr."ID_MED_3" = m3.id_medicamento
+                            LEFT JOIN "Medicamentos" m4 ON tr."ID_MED_4" = m4.id_medicamento
+                            LEFT JOIN "Medicamentos" m5 ON tr."ID_MED_5" = m5.id_medicamento
                         WHERE
                             tr."ID_PACIENTE" = {self._id_usuario}
                     '''
