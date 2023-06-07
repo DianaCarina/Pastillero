@@ -87,10 +87,11 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
 
     def modificar(self):
     # Aqui se modificaran los componentes de la tabla
-        self.tabWidget.setCurrentIndex(2)
+        self.tabWidget.setCurrentIndex(1)
         self.label_2.setText("Modificar datos del paciente")
         self.queryDatos = query.Paciente(self.lbl_NoSocial.text())
         self.data_px = self.queryDatos.consultaIdPX2()
+        print(self.data_px)
 
     def busquedaTab(self):
     # Cambio de pestaña para el usuario y contraseña
