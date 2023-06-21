@@ -64,7 +64,7 @@ class Medicamento(CONEXION):
 
 # Clase para registrar al paciente
 class Paciente(CONEXION):
-    def __init__(self, nombre = "val1", enfermedad = "val2", edad = "val3", NoSS = "val4", User = "val5", password = "val6", id = 1):
+    def __init__(self, nombre = "val1", enfermedad = "val2", edad = "val3", NoSS = 1, User = "val5", password = "val6", id = 1, unico="unico"):
         super().__init__()
         self._nombre = nombre
         self._enfermedad = enfermedad
@@ -73,6 +73,7 @@ class Paciente(CONEXION):
         self._usuario = User
         self._password = password
         self._id = id
+        self._unico = unico
         
     def registroPX(self):
         try:
@@ -101,12 +102,15 @@ class Paciente(CONEXION):
         finally:
             self.cursor.close()   
     
-    
     def consultaIdPX2(self):
         try:
             with self.conexion:
                 with self.conexion.cursor() as self.cursor:
-                    self.consulta = f'SELECT * FROM public.\"DATOS_PX\" WHERE \"ID_PX\" = \'{self._id}\''
+                    self.consulta = f'SELECT * FROM public.\"DATOS_PX\" WHERE'
+                    if self._SeguroSocial == 1:
+                        self.consulta = self.consulta + f" \"ID_PX\" = \'{self._id}\'"
+                    else:
+                        self.consulta = self.consulta + f" \"NoSS\" = {self._SeguroSocial}"
                     self.cursor.execute(self.consulta)
                     self.registros  = self.cursor.fetchone()
                     return self.registros 
@@ -127,6 +131,21 @@ class Paciente(CONEXION):
             print("Ha ocurrido un error en la consulta del Id del paciente")       
         finally:
             self.cursor.close()
+    
+    def update_values(self):
+        try:
+            with self.conexion:
+                with self.conexion.cursor() as self.cursor:
+                    self.consulta = f"UPDATE \"DATOS_PX\" SET \"NOMBRE\" = '{self._nombre}', \"Enfermedad\" = '{self._enfermedad}', \"Edad\" = {self._edad}, \"NoSS\" = {self._SeguroSocial}, \"Usuario\" = '{self._usuario}', \"Contra\" = '{self._password}' WHERE \"NoSS\" = {self._unico}"
+                    print(self.consulta)
+                    self.cursor.execute(self.consulta)
+                    self.registros_afectados = self.cursor.rowcount
+                    print(f'Registros modificados {self.registros_afectados}')
+        except:
+            print("Fallo en la actualizacion de los datos")
+        finally:
+            self.cursor.close()
+
 
 class Tratamiento(CONEXION):
     def __init__(self, nombre_medicamento = "NONE", id_usuario = "BUENAS"):

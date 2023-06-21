@@ -11,8 +11,8 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         # Iniciar el programa en la primera pestaña
         self.tabWidget.setCurrentIndex(0)
         self.tab_inicio.setEnabled(True)
-      #  self.tab_inicioSesion.setEnabled(False)
-      #  self.tab_registro_medicamento.setEnabled(False)
+        self.tab_inicioSesion.setEnabled(False)
+        self.tab_registro_medicamento.setEnabled(False)
         self.tab_registro_px.setEnabled(False)
         self.tab_tabla_px.setEnabled(False)
         # Eventos con sus slots 
@@ -88,10 +88,17 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
     def modificar(self):
     # Aqui se modificaran los componentes de la tabla
         self.tabWidget.setCurrentIndex(1)
+        self.tab_registro_px.setEnabled(True)
+        self.btn_registrar_px.setText("Modificar")
         self.label_2.setText("Modificar datos del paciente")
-        self.queryDatos = query.Paciente(self.lbl_NoSocial.text())
+        self.queryDatos = query.Paciente(NoSS = int(self.lbl_NoSocial.text()))
         self.data_px = self.queryDatos.consultaIdPX2()
-        print(self.data_px)
+        self.lEdit_nombre_reg.setText(self.data_px[1])
+        self.lEdit_edad_reg.setText(str(self.data_px[3]))
+        self.lEdit_Dx.setText(self.data_px[2])
+        self.lEdit_NoSS.setText(str(self.data_px[4]))
+        self.lEdit_User.setText(self.data_px[5])
+        self.lEdit_Password.setText(self.data_px[6])
 
     def busquedaTab(self):
     # Cambio de pestaña para el usuario y contraseña
@@ -101,6 +108,7 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         
     def TablaTab(self, parametro1):
     # Cambio a la Tabla para ver los medicamentos registrados
+        self.btn_registrar_px.setText("Registrar")
         self.tabWidget.setCurrentIndex(4)
         self.tab_tabla_px.setEnabled(True)
         self.tab_inicioSesion.setEnabled(False)
@@ -143,19 +151,27 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
             except:
                 self.lbl_corregir.setText("*Ingrese la edad  y el numero de servicio social en numero*")
             else:
-                try:
-                    # Insertar los datos en la base de datos
-                    self.RegistroPaciente = query.Paciente(self.nombrePx, self.padecimiento, self.edad, self.NoSS, self.user, self.password)
-                    self.RegistroPaciente.registroPX()
-                    # Cambio a pestaña info medicameto
-                    self.tabWidget.setCurrentIndex(2)                    
-                    self.tab_registro_medicamento.setEnabled(True)
-                    self.tab_registro_px.setEnabled(False)
-                    # Limpiar lineedit
-                    for line in line_edits:
-                        line.clear()
-                except:
-                    self.lbl_corregir.setText("Error en la insersion de datos")
+                if self.btn_registrar_px.text() == "Registrar":
+
+                    try:
+                        # Insertar los datos en la base de datos
+                        self.RegistroPaciente = query.Paciente(self.nombrePx, self.padecimiento, self.edad, self.NoSS, self.user, self.password)
+                        self.RegistroPaciente.registroPX()
+                                            
+                        self.tab_registro_medicamento.setEnabled(True)
+                        self.tab_registro_px.setEnabled(False)
+                        # Limpiar lineedit
+                        for line in line_edits:
+                            line.clear()
+                    except:
+                        self.lbl_corregir.setText("Error en la insersion de datos")
+                else:
+                    self.actualizacion = query.Paciente(nombre=self.nombrePx, NoSS=self.NoSS, enfermedad=self.padecimiento, edad=self.edad, User=self.user, password=self.password, unico = self.lbl_NoSocial.text())
+                    self.actualizacion.update_values()
+                # Cambio a pestaña info medicameto
+                self.tabWidget.setCurrentIndex(2)
+
+
         else:
             self.lbl_corregir.setText("*Agregar correctamente los campos*")
                 

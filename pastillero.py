@@ -326,7 +326,7 @@ class Ui_MainWindow(object):
         self.groupBox.setFont(font)
         self.groupBox.setObjectName("groupBox")
         self.lbl_NoSocial = QtWidgets.QLabel(self.groupBox)
-        self.lbl_NoSocial.setGeometry(QtCore.QRect(180, 100, 221, 31))
+        self.lbl_NoSocial.setGeometry(QtCore.QRect(210, 110, 221, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.lbl_NoSocial.setFont(font)
@@ -351,7 +351,7 @@ class Ui_MainWindow(object):
         self.lbl_nombre.setFont(font)
         self.lbl_nombre.setObjectName("lbl_nombre")
         self.lbl_social = QtWidgets.QLabel(self.groupBox)
-        self.lbl_social.setGeometry(QtCore.QRect(10, 110, 141, 31))
+        self.lbl_social.setGeometry(QtCore.QRect(0, 110, 151, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.lbl_social.setFont(font)
@@ -378,7 +378,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuOpciones.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(4)
+        self.tabWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
