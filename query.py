@@ -133,18 +133,19 @@ class Paciente(CONEXION):
             self.cursor.close()
     
     def update_values(self):
-        try:
-            with self.conexion:
-                with self.conexion.cursor() as self.cursor:
-                    self.consulta = f"UPDATE \"DATOS_PX\" SET \"NOMBRE\" = '{self._nombre}', \"Enfermedad\" = '{self._enfermedad}', \"Edad\" = {self._edad}, \"NoSS\" = {self._SeguroSocial}, \"Usuario\" = '{self._usuario}', \"Contra\" = '{self._password}' WHERE \"NoSS\" = {self._unico}"
-                    print(self.consulta)
-                    self.cursor.execute(self.consulta)
-                    self.registros_afectados = self.cursor.rowcount
-                    print(f'Registros modificados {self.registros_afectados}')
-        except:
-            print("Fallo en la actualizacion de los datos")
-        finally:
-            self.cursor.close()
+      #  try:
+        with self.conexion:
+            with self.conexion.cursor() as self.cursor:
+                self.consulta = "UPDATE \"DATOS_PX\" SET \"NOMBRE\" = %s, \"Enfermedad\" = %s, \"Edad\" = %s, \"NoSS\" = %s, \"Usuario\" = %s, \"Contra\" = %s WHERE \"NoSS\" = %s"
+                self.values = (self._nombre, self._enfermedad, self._edad, self._SeguroSocial, self._usuario, self._password, self._unico)
+                print('values = ', self.values)
+                self.cursor.execute(self.consulta, self.values)
+                self.registros_afectados = self.cursor.rowcount
+                print(f'Registros actualizado {self.registros_afectados}')
+# exc   ept:
+        #print("Fallo en la actualizacion de los datos")
+#fin    ally:
+        self.cursor.close()
 
 
 class Tratamiento(CONEXION):
@@ -201,5 +202,5 @@ class Tratamiento(CONEXION):
 
 
 if __name__ == "__main__":
-    a = Paciente('Diana', 'Ninguna', 23, 555, 'ponce', 'carinita')
-    a.registroPX()
+    a = Paciente('Diana', 'Ninguna', 23, 236641, 'ponce', 'carinita', unico = 555)
+    a.update_values()
