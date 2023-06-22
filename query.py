@@ -133,20 +133,18 @@ class Paciente(CONEXION):
             self.cursor.close()
     
     def update_values(self):
-      #  try:
-        with self.conexion:
-            with self.conexion.cursor() as self.cursor:
-                self.consulta = "UPDATE \"DATOS_PX\" SET \"NOMBRE\" = %s, \"Enfermedad\" = %s, \"Edad\" = %s, \"NoSS\" = %s, \"Usuario\" = %s, \"Contra\" = %s WHERE \"NoSS\" = %s"
-                self.values = (self._nombre, self._enfermedad, self._edad, self._SeguroSocial, self._usuario, self._password, self._unico)
-                print('values = ', self.values)
-                self.cursor.execute(self.consulta, self.values)
-                self.registros_afectados = self.cursor.rowcount
-                print(f'Registros actualizado {self.registros_afectados}')
-# exc   ept:
-        #print("Fallo en la actualizacion de los datos")
-#fin    ally:
-        self.cursor.close()
-
+        try:
+            with self.conexion:
+                with self.conexion.cursor() as self.cursor:
+                    self.consulta = "UPDATE \"DATOS_PX\" SET \"NOMBRE\" = %s, \"Enfermedad\" = %s, \"Edad\" = %s, \"NoSS\" = %s, \"Usuario\" = %s, \"Contra\" = %s WHERE \"NoSS\" = %s"
+                    self.values = (self._nombre, self._enfermedad, self._edad, self._SeguroSocial, self._usuario, self._password, self._unico)
+                    self.cursor.execute(self.consulta, self.values)
+                    self.registros_afectados = self.cursor.rowcount
+                    print(f'Registros actualizado {self.registros_afectados}')
+        except:
+            print("Fallo en la actualizacion de los datos")
+        finally:
+            self.cursor.close()
 
 class Tratamiento(CONEXION):
     def __init__(self, nombre_medicamento = "NONE", id_usuario = "BUENAS"):
@@ -155,6 +153,7 @@ class Tratamiento(CONEXION):
         self._numMedicamento = len(nombre_medicamento)
         self._id_usuario = id_usuario    
         self.values = (self._id_usuario,) + self._nombre_medicamento
+        self.values2 = self._nombre_medicamento + (self._id_usuario,)
         # print("valores a insertar: ",self.values)
 
     def insertTrat(self):
@@ -169,6 +168,20 @@ class Tratamiento(CONEXION):
             print("Fallo en la insersion de datos del tratamiento")
         finally:
             self.cursor.close()   
+
+    def update_values4(self):
+        try:
+            with self.conexion:
+                with self.conexion.cursor() as self.cursor:
+                    self.consulta = "UPDATE \"TRATAMIENTO\" SET \"ID_MED_1\" = %s, \"ID_MED_2\" = %s, \"ID_MED_3\" = %s, \"ID_MED_4\" = %s, \"ID_MED_5\" = %s WHERE \"ID_PACIENTE\" = %s"
+                    print("selfvalues", self.values2)
+                    self.cursor.execute(self.consulta, self.values2)
+                    self.registros_afectados = self.cursor.rowcount
+                    print(f'Tratamiento actualizado {self.registros_afectados}')
+        except:
+            print("Fallo en la actualizacion de tratamiento")
+        finally:
+            self.cursor.close()
 
     def consultaTratamiento(self):
         try:

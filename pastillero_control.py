@@ -89,6 +89,9 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
     # Aqui se modificaran los componentes de la tabla
         self.tabWidget.setCurrentIndex(1)
         self.tab_registro_px.setEnabled(True)
+        self.lista_medicamentos.clear()
+        self.label_9.setText(f"Medicamentos seleccionados: 0")
+        self.comboBox.setCurrentIndex(0)
         self.btn_registrar_px.setText("Modificar")
         self.label_2.setText("Modificar datos del paciente")
         self.queryDatos = query.Paciente(NoSS = int(self.lbl_NoSocial.text()))
@@ -152,7 +155,6 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
                 self.lbl_corregir.setText("*Ingrese la edad  y el numero de servicio social en numero*")
             else:
                 if self.btn_registrar_px.text() == "Registrar":
-
                     try:
                         # Insertar los datos en la base de datos
                         self.RegistroPaciente = query.Paciente(self.nombrePx, self.padecimiento, self.edad, self.NoSS, self.user, self.password)
@@ -170,6 +172,7 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
                     self.actualizacion.update_values()
                 # Cambio a pestaña info medicameto
                 self.tabWidget.setCurrentIndex(2)
+                self.tab_registro_medicamento.setEnabled(True)
 
 
         else:
@@ -182,14 +185,18 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         if self.faltantes > 0:
             for n in range(5-self.faltantes, 5): # verificar de que indice empezar
                 self.lista_medicamentos.append("1")
-        # print("Lista de medicamentos", self.lista_medicamentos)
+        #print("Lista de medicamentos", self.lista_medicamentos)
 
         # Se busca el id del usuario 
         self.id2 = self.busqueda_id_usuario()
         
         # Insertar los medicmamentos en la tabla tratamiento
         self.queryTratamiento = query.Tratamiento(self.lista_medicamentos, self.id2)
-        self.queryTratamiento.insertTrat()
+        if self.btn_registrar_px.text() == "Registrar":
+            self.queryTratamiento.insertTrat()
+        else:
+            self.queryTratamiento.update_values4()
+
         # Cambio pestañas
         self.TablaTab(self.id2)
 
