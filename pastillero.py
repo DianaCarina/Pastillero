@@ -318,7 +318,7 @@ class Ui_MainWindow(object):
         self.tabla_medicamentos.horizontalHeader().setSortIndicatorShown(False)
         self.tabla_medicamentos.verticalHeader().setDefaultSectionSize(40)
         self.groupBox = QtWidgets.QGroupBox(self.tab_tabla_px)
-        self.groupBox.setGeometry(QtCore.QRect(50, 40, 391, 141))
+        self.groupBox.setGeometry(QtCore.QRect(40, 40, 441, 151))
         font = QtGui.QFont()
         font.setPointSize(11)
         font.setBold(True)
@@ -351,7 +351,7 @@ class Ui_MainWindow(object):
         self.lbl_nombre.setFont(font)
         self.lbl_nombre.setObjectName("lbl_nombre")
         self.lbl_social = QtWidgets.QLabel(self.groupBox)
-        self.lbl_social.setGeometry(QtCore.QRect(0, 110, 151, 31))
+        self.lbl_social.setGeometry(QtCore.QRect(10, 110, 171, 31))
         font = QtGui.QFont()
         font.setPointSize(11)
         self.lbl_social.setFont(font)
@@ -378,7 +378,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuOpciones.menuAction())
 
         self.retranslateUi(MainWindow)
-        self.tabWidget.setCurrentIndex(1)
+        self.tabWidget.setCurrentIndex(3)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):

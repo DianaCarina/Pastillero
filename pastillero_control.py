@@ -1,5 +1,4 @@
 from pastillero import *
-from advertencia_id import *
 from addMe import Ui_Dialog
 import query as query
 
@@ -66,6 +65,11 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.tab_registro_px.setEnabled(False)
         self.tab_inicioSesion.setEnabled(False)
         self.tab_tabla_px.setEnabled(False)
+        self.lbl_nombre.setText("Nombre: ")
+        self.lbl_edad.setText("Edad: ")
+        self.lbl_Dx.setText("Padecimiento: ")
+        self.lbl_NoSocial.setText("  ")
+        self.tabla_medicamentos.clearContents()
 
     def addMedicamento(self):
     # Aqui se seleccionas los medicamentos del combobox y 
@@ -89,6 +93,7 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
     # Aqui se modificaran los componentes de la tabla
         self.tabWidget.setCurrentIndex(1)
         self.tab_registro_px.setEnabled(True)
+        self.tab_tabla_px.setEnabled(False)
         self.lista_medicamentos.clear()
         self.label_9.setText(f"Medicamentos seleccionados: 0")
         self.comboBox.setCurrentIndex(0)
@@ -118,6 +123,8 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.tab_registro_medicamento.setEnabled(False)
         self.nombre_ingresar.clear()
         self.lbl_password.clear()
+        self.comboBox.setCurrentIndex(0)
+        self.label_9.setText("Medicamentos seleccionados: 0")
 
         self.tratamiento_ = query.Tratamiento(id_usuario=parametro1)
         self.tratamiento1 = self.tratamiento_.consultaTratamiento()
@@ -172,9 +179,14 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
                     self.actualizacion.update_values()
                 # Cambio a pestaña info medicameto
                 self.tabWidget.setCurrentIndex(2)
+                self.tab_registro_px.setEnabled(False)
+                self.lEdit_nombre_reg.clear()
+                self.lEdit_edad_reg.clear()
+                self.lEdit_Dx.clear()
+                self.lEdit_NoSS.clear()
+                self.lEdit_User.clear()
+                self.lEdit_Password.clear()
                 self.tab_registro_medicamento.setEnabled(True)
-
-
         else:
             self.lbl_corregir.setText("*Agregar correctamente los campos*")
                 
@@ -220,11 +232,6 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
             # Si ya existe dejamos pasar
             else:
                 pass
-
-class Ui_Form(Ui_Form, QtWidgets.QMainWindow):
-    def __init__ (self, *args, **kwargs):
-        QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
-        self.setupUi(self) 
 
 class AgregarMedicamento(Ui_Dialog, QtWidgets.QDialog, QtWidgets.QLineEdit):
     def __init__(self, *args, **kwargs):
