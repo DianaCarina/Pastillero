@@ -253,7 +253,6 @@ if __name__=="__main__":
     ventana = ProgramaPrincipal()
     ventana.show()
 
-    advertencia = Ui_Form()
     # Creamos una instancia para el dialogo donde se agregamos medicamentos
     nuevoMeciamentoWidget = AgregarMedicamento()
 
