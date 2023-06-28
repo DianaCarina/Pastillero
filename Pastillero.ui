@@ -38,26 +38,26 @@
       <x>0</x>
       <y>0</y>
       <width>501</width>
-      <height>421</height>
+      <height>440</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
       <width>501</width>
-      <height>421</height>
+      <height>440</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
       <width>501</width>
-      <height>421</height>
+      <height>440</height>
      </size>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: rgb(227, 227, 227);</string>
+     <string notr="true">background-color: rgb(85, 170, 255);</string>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_inicio">
      <attribute name="title">
@@ -74,19 +74,6 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <spacer name="horizontalSpacer">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
         <widget class="QLabel" name="label">
          <property name="font">
           <font>
@@ -94,25 +81,12 @@
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(227,227,227);</string>
+          <string notr="true">background-color: rgb(85, 170, 255);</string>
          </property>
          <property name="text">
-          <string>Bienvenido a su pastillero digital</string>
+          <string>    Bienvenido a su pastillero digital</string>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
      </widget>
@@ -131,7 +105,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Registrarce</string>
@@ -152,7 +126,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Iniciar Sesion</string>
@@ -341,7 +315,7 @@
       <property name="geometry">
        <rect>
         <x>280</x>
-        <y>340</y>
+        <y>350</y>
         <width>191</width>
         <height>41</height>
        </rect>
@@ -352,7 +326,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Registrar</string>
@@ -451,7 +425,7 @@
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>340</y>
+        <y>350</y>
         <width>191</width>
         <height>41</height>
        </rect>
@@ -462,7 +436,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Regresar a menu principal</string>
@@ -524,7 +498,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Agregar medicamento</string>
@@ -545,7 +519,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Concluir registro</string>
@@ -579,7 +553,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Registrar nuevo medicamento</string>
@@ -630,7 +604,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Actualizar lista</string>
@@ -656,7 +630,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Iniciar sesion</string>
@@ -757,7 +731,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Regresar a menu principal</string>
@@ -794,8 +768,8 @@
      <widget class="QPushButton" name="btn_back_inicio">
       <property name="geometry">
        <rect>
-        <x>290</x>
-        <y>360</y>
+        <x>300</x>
+        <y>370</y>
         <width>176</width>
         <height>27</height>
        </rect>
@@ -806,7 +780,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Cerrar Sesion</string>
@@ -816,7 +790,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>360</y>
+        <y>370</y>
         <width>181</width>
         <height>27</height>
        </rect>
@@ -827,7 +801,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(208, 208, 208);</string>
+       <string notr="true">background-color: rgb(193, 226, 255);</string>
       </property>
       <property name="text">
        <string>Modificar</string>
@@ -846,6 +820,9 @@
        <font>
         <pointsize>14</pointsize>
        </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(167, 210, 255);</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -1048,23 +1025,6 @@
      </widget>
     </widget>
    </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>501</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuOpciones">
-    <property name="title">
-     <string>Opciones </string>
-    </property>
-    <addaction name="actionInformacion"/>
-   </widget>
-   <addaction name="menuOpciones"/>
   </widget>
   <action name="actionInformacion">
    <property name="text">
