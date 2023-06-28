@@ -9,7 +9,7 @@ class CONEXION:
                 user = 'postgres', 
                 password = '18228871', 
                 host =  '127.0.0.1', 
-                database = 'Pastillero')
+                database = 'pastillero2')
            # print("Conexion exitosa con base de datos pastillero")
         except Exception:
             print(f"Ha ocurrido un error con la conexion a la base de datos")
@@ -37,17 +37,18 @@ class Medicamento(CONEXION):
            self.cursor.close()
 
     def medQuery(self):
-        try:
-            with self.conexion:
-                with self.conexion.cursor() as self.cursor:
-                    self.consulta = f"SELECT * FROM \"Medicamentos\" ORDER BY nombre_medicamento ASC"
-                    self.cursor.execute(self.consulta)
-                    self.registros  = self.cursor.fetchall()
-                    return self.registros        
-        except:
-            print("Ha ocurrido un error en la consulta de los medicamentos")
-        finally:
-           self.cursor.close()
+        #try:
+        with self.conexion:
+            with self.conexion.cursor() as self.cursor:
+                self.consulta = f"SELECT * FROM \"Medicamentos\" ORDER BY nombre_medicamento ASC"
+                self.cursor.execute(self.consulta)
+                self.registros  = self.cursor.fetchall()
+                print(self.registros)
+                return self.registros        
+        #except:
+        #    print("Ha ocurrido un error en la consulta de los medicamentos")
+        #finally:
+        #   self.cursor.close()
     
     def medQuery2(self):
         try:
@@ -215,5 +216,5 @@ class Tratamiento(CONEXION):
 
 
 if __name__ == "__main__":
-    a = Paciente('Diana', 'Ninguna', 23, 236641, 'ponce', 'carinita', unico = 555)
-    a.update_values()
+    a = Medicamento(5,"medicameno")
+    a.medQuery()
