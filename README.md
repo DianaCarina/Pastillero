@@ -4,7 +4,9 @@ Este proyecto fue desarrollado como parte de una tarea escolar y marca mi primer
 **Funcionalidades principales:**
 
 -Agregar y almacenar la informacion sobre los pacientes y sus medicamentos
+
 -Visualizar la informacion guardada.
+
 -Busqueda de la informacion por medio de usuario y contraseña
 
 **Versiones anteriores:**
