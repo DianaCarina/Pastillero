@@ -1,5 +1,6 @@
 # En este programa se hacen todas las modificaciones en la Base de datos Pastillero
 import psycopg2
+from loggin_proce import log
 
 # En esta clase se guardara el nombre del medicamento en la base de datos
 class CONEXION:
@@ -10,9 +11,9 @@ class CONEXION:
                 password = '18228871', 
                 host =  '127.0.0.1', 
                 database = 'pastillero2')
-           # print("Conexion exitosa con base de datos pastillero")
+            log.debug("Conexion exitosa con base de datos pastillero")
         except Exception:
-            print(f"Ha ocurrido un error con la conexion a la base de datos")
+            log.error(f"Ha ocurrido un error con la conexion a la base de datos")
 
 class Medicamento(CONEXION):
     def __init__(self, medicamento, id_medicamento = ""):
@@ -43,7 +44,6 @@ class Medicamento(CONEXION):
                 self.consulta = f"SELECT * FROM \"Medicamentos\" ORDER BY nombre_medicamento ASC"
                 self.cursor.execute(self.consulta)
                 self.registros  = self.cursor.fetchall()
-                print(self.registros)
                 return self.registros        
         #except:
         #    print("Ha ocurrido un error en la consulta de los medicamentos")

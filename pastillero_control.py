@@ -1,13 +1,14 @@
 from pastillero import *
 from addMe import Ui_Dialog
 import query as query
+import loggin_proce as log
 
 
 class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdit, QtWidgets.QTableWidgetItem):
     def __init__ (self, *args, **kwargs):
         QtWidgets.QMainWindow.__init__(self, *args, **kwargs)
         self.setupUi(self) 
-        # Iniciar el programa en la primera pestaña
+        log.debug('Se inicio el programa correctamente')
         self.tabWidget.setCurrentIndex(0)
         self.tab_inicio.setEnabled(True)
         self.tab_inicioSesion.setEnabled(False)
@@ -41,9 +42,9 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
         self.contra_user = self.lbl_password.text()
         self.consulta_inicio = query.Paciente(User = self.nombre_usuario, password=self.contra_user)
         self.verificacion = self.consulta_inicio.consultaInicioSesion()
-        print(self.verificacion)
         if self.verificacion is None:
             self.lbl_n_user.setText("Usuario o contraseña no validos")
+            self.info('Se ingreso un usuario o contraseña no validos')
         else:
             self.lbl_n_user.clear()
             self.TablaTab(self.verificacion[0])
@@ -128,11 +129,9 @@ class ProgramaPrincipal(Ui_MainWindow, QtWidgets.QMainWindow, QtWidgets.QLineEdi
 
         self.tratamiento_ = query.Tratamiento(id_usuario=parametro1)
         self.tratamiento1 = self.tratamiento_.consultaTratamiento()
-        print("tratamiento: ", self.tratamiento1)
 
         self.consulta_datos_px = query.Paciente(id=parametro1)
         self.datosPX = self.consulta_datos_px.consultaIdPX2()
-        print("datos del paciente: ", self.datosPX)
 
         self.lbl_nombre.setText("Nombre: " +self.datosPX[1])
         self.lbl_edad.setText("Edad: " + str(self.datosPX[3]) + " años")
